@@ -41,12 +41,32 @@ export default {
     },
     addNode(parentId) {
       const newId = prompt("Enter node ID");
-      if (newId) {
+
+      if (newId === null) {
+        // User pressed cancel
+        return;
+      }
+
+      if (newId.trim() === "") {
+        alert("Node ID cannot be empty.");
+        return;
+      }
+
+      const isExisted = this.nodes.some((node) => node.id === newId);
+      if (isExisted) {
+        alert("Node ID must be unique.");
+      } else {
         this.nodes.push({ id: newId, parent_id: parentId });
       }
     },
     deleteNode(nodeId) {
-      this.nodes = this.nodes.filter((node) => node.id !== nodeId);
+      const deleteChildren = (id) => {
+        this.nodes = this.nodes.filter((node) => node.id !== id);
+        this.nodes.forEach((node) => {
+          if (node.parent_id === id) deleteChildren(node.id);
+        });
+      };
+      deleteChildren(nodeId);
     }
   }
 };
