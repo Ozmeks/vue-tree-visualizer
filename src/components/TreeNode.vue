@@ -22,6 +22,7 @@
 <script>
 export default {
   name: "TreeNode",
+  inject: ["getNodes"],
   props: {
     node: {
       type: Object,
@@ -30,7 +31,7 @@ export default {
   },
   computed: {
     children() {
-      return this.$root.nodes.filter((n) => n.parent_id === this.node.id);
+      return this.getNodes().filter((n) => n.parent_id === this.node.id);
     }
   },
   methods: {

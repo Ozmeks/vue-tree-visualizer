@@ -21,6 +21,11 @@ import TreeNode from "./components/TreeNode.vue";
 import FileUploader from "./components/FileUploader.vue";
 
 export default {
+  provide() {
+    return {
+      getNodes: () => this.nodes
+    };
+  },
   components: {
     TreeNode,
     FileUploader
